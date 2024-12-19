@@ -197,11 +197,14 @@ class SpellingApp:
         self.start_test()
 
     def play_audio(self, text):
-        tts = gTTS(text=text, lang='en')
-        audio_file = io.BytesIO()
-        tts.save(audio_file)
-        audio_file.seek(0)
-        st.audio(audio_file, format='audio/mp3')
+        # Embed the ResponsiveVoice script into Streamlit using components
+        st.components.v1.html("""
+        <script src="https://code.responsivevoice.org/responsivevoice.js?key=Ytp4Wvua"></script>
+        <script>
+            // Use the responsiveVoice JavaScript function to speak the word
+            responsiveVoice.speak("{0}", "UK English Male");
+        </script>
+        """.format(word), height=0)  # Set height=0 to hide the script output
 
     def view_words(self):
         st.title("List of Words")
